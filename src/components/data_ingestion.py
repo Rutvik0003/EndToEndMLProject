@@ -63,6 +63,7 @@ if __name__ == "__main__":
     train_arr, test_arr, _ = data_transformation.transform_data(train_data_path,test_data_path)
 
     model_trainer = ModelTrainer()
-    model_trainer.train_model(train_arr,test_arr)
+    r2_Score = model_trainer.train_model(train_arr,test_arr)
+    print(r2_Score)
 
 

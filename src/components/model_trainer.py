@@ -4,9 +4,7 @@ import numpy as np
 import pandas as pd
 
 from sklearn.linear_model import LinearRegression
-
 from sklearn.tree import DecisionTreeRegressor
-
 from sklearn.ensemble import (
     RandomForestRegressor,
     GradientBoostingRegressor,
@@ -14,6 +12,8 @@ from sklearn.ensemble import (
 )
 from sklearn.neighbors import KNeighborsRegressor
 from xgboost import XGBRegressor
+
+from sklearn.metrics import r2_score
 
 from dataclasses import dataclass
 
@@ -72,6 +72,16 @@ class ModelTrainer:
             )
 
             logging.info("Model Trainer Pickel file made")
+
+            predicted = best_model.predict(X_test)
+
+            logging.info("Best model predicted on Test Values")
+
+            Score = r2_score(y_test, predicted)
+
+            logging.info("Calculated r2 Score")
+
+            return Score
 
 
 
