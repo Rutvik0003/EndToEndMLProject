@@ -12,25 +12,28 @@ class PredictionPipeline:
 
     def predict_data(self,data):
 
-        model_path = 'artifact/model_trainer.pkl'
-        preprocessor_path = 'artifact/preprocessor.pkl'
+        try:
+            model_path = 'artifact/model_trainer.pkl'
+            preprocessor_path = 'artifact/preprocessor.pkl'
 
-        model = load_obj(
-            file_path = model_path,
-        )
+            model = load_obj(
+                file_path = model_path,
+            )
 
-        preprocessor = load_obj(
-            file_path=preprocessor_path
-        )
+            preprocessor = load_obj(
+                file_path=preprocessor_path
+            )
 
-        logging.info("Models are loaded")
-        data_processed = preprocessor.transform(data)
+            logging.info("Models are loaded")
+            data_processed = preprocessor.transform(data)
 
-        result = model.predict(data_processed)
+            result = model.predict(data_processed)
 
-        logging.info("Predicted New Result")
+            logging.info("Predicted New Result")
 
-        return result[0]
+            return result[0]
+        except Exception as e:
+            raise CustomException(e,sys) from None
 
 class CustomData:
     def __init__(self,
@@ -51,14 +54,18 @@ class CustomData:
         self.writing_score = writing_score
 
     def get_data_as_dataframe(self):
-        input_data = {
-            "gender": self.gender,
-            "race/ethnicity": self.race_ethnicity,
-            "parental level of education": self.parental_level_of_education,
-            "lunch": self.lunch,
-            "test preparation course": self.test_preparation_course,
-            "reading score": self.reading_score,
-            "writing score": self.writing_score
-        }
 
-        return pd.DataFrame([input_data])
+        try:
+            input_data = {
+                "gender": self.gender,
+                "race/ethnicity": self.race_ethnicity,
+                "parental level of education": self.parental_level_of_education,
+                "lunch": self.lunch,
+                "test preparation course": self.test_preparation_course,
+                "reading score": self.reading_score,
+                "writing score": self.writing_score
+            }
+
+            return pd.DataFrame([input_data])
+        except Exception as e:
+            raise CustomException(e,sys) from None
